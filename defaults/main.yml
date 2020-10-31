@@ -13,6 +13,9 @@ boc_users:
     ssh_key_length: 4096
     authorized_keys:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDTl9jhW1gFdGFP9h9anwMF+vObysqyeRrpntaFJlnrOL0LwhF69js5G7RDXtKLKgYVAq4pDr85e+Q4LzlsfeCS+t5pjDQvu4tkRi02MMBUg23t+kPEwbgYdVQREUSvhYZQujkpX5FBN9Wh48xnJ7MuHn8mz2iT9xivnWq74S5Q4bmy7KzGysj2a/uj2FhHiLmDXDy0V8prtamb7uo5+3wzCdvobc9F+pMeJ0z3dUt42PSlbjwDeLs+6fiiDRr/KDen5uIu+s0oawQNi5qwUwscsmo0PxDaOvwfvBO3oklBzIH0X4Fr0o0KFGmLUHjvWaq/UIw4+bpOtAiCxpceRMh5XUteXbaLFMuMmpQ3UUaXE++d+lx4PeVuvWbVfcaVkCyYLlN1PFeXI1Z/f2II5SH/5kE+75FKhIxPkfMxNtPjlufARoCxhYOprBFyyZuUXUL7XPHYMPawJGPjfPl3pEIeM2oSzSqnjr3JaZY+12t/5TwTh3D0PAVnkSnjVgzgH+owqsbqLnr20pmPNiNBp3F+4lGnMybzIRThWYqzddHYvmf8zUJqkISOO03SIia4/g1T3N5xdLzstE5XgcR8u41BsxK3FcUh+ctcZTtk/NN8ar7vUA5+MJi/TABDQ/+xNIKwVv1UFTs03ZNUoqKAg2RGIj7nyjQJbTkJ7tsCxTdiqw== autoadmin@excutor"
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC5FAIe956NM92vcvfpx+UL2TfaWuEkgn8xAFTMx+2RVVLpNV2vgR8m0ZVxvHQRup9rpt3zeL35Wme8JzIP5ZyShZFYnZAyTzUFLYbkTQorXQZDWlLfCYfF4YO4Zt8xnGD/AhuQjF0kfWEW6KLrWTulZtr1+gxm69Qw9PReczToUs73gbmoMe3zhim4C1auUWi263KsJwjbETOyspGZitgpjwwYRRBoXJYPy9cg1bBjZzEMAWOi9SDsoY59i4eCyO4XA055wzXu+hExBSnbUdl7KBWZisnsmB5f1CKk95qZ1jnxQDP6OvpOUtVAX1fWmK4fhD7w65s8hdLsKcRaQ5MIgduIIfqr0enAlh+sF/43aCn2Fwmd/uuRf5yHsNBZr8GkxX6x68eFmO7wn31O12WuFvFZ6r6RGoBmaIucNlN1LohKHAB9stdPfKDUKf998/NsgtK9UkBJi/VfxwfZYMroSMvZgjEPXaINS0yEPFS5AHNJMx8tnkpqYsmN3Ugu5dD+V1qeIiM1Zi63Rr9AtvXW6NGBIPF9dA22ooh0LKbv7yBNNuhkt2Eyp+OeFSCUAn2o66Xx5wKwdGpANBfY9bmyrsdVTG15K2s8tPjqr9G7D6zledwDC8ZOfz4jQyBRTSNo+Es43Rk0Ah6Ex0rFPWo2vgF1k/M2elODT39jV4ZkfQ== MBP@TA"
+
+boc_setup_firewall: True
 
 # Firewall ufw
 boc_firewall_ufw_rules:
@@ -20,13 +23,24 @@ boc_firewall_ufw_rules:
 #  - { rule: "allow", port: "80", proto: "tcp" }
 #  - { rule: "allow", port: "443", proto: "tcp" }
 
+# https://docs.ansible.com/ansible/2.9/modules/ufw_module.html#parameter-logging
+boc_firewall_ufw_logging: "medium"
+
+# Firewall firewalld
+# Values for rules are passed to https://docs.ansible.com/ansible/latest/modules/firewalld_module.html#parameter-state
+boc_firewall_firewalld_rules:
+  - { rule: "enabled", port: "22", proto: "tcp" }
+  - { rule: "disabled", port: "80", proto: "tcp" }
+#  - { rule: "enabled", port: "443", proto: "tcp" }
+
 boc_system_update: True
 
 # Packages that have to be present
 boc_packages_present: []
 
 # Packages that have to be in latest version
-boc_packages_latest: []
+boc_packages_latest:
+  - "vim"
 
 #
 boc_setup_ssh_server: True

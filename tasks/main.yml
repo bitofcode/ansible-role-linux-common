@@ -6,7 +6,7 @@
 
 - name: "Include vars"
   include_vars:
-    file: "ansible_os_family.yml"
+    file: "{{ ansible_os_family }}.yml"
 
 - name: "Set a Hostname to {{ boc_hostname }}" 
   hostname:
@@ -22,3 +22,7 @@
 - name: "Setup SSH-Server"
   include_tasks: "setup-ssh-server.yml"
   when: boc_setup_ssh_server is defined and boc_setup_ssh_server
+
+- name: "Setup Firewall"
+  include_tasks: "setup-firewall.yml"
+  when: boc_setup_firewall is defined and boc_setup_firewall

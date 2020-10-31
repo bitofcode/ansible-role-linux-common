@@ -9,3 +9,13 @@
   service:
     name: "{{ _boc_debian_sshd_service_name }}"
     state: restarted
+
+- name: restart firewall on RedHat
+  service:
+    name: "{{ _boc_redhat_firewall_service_name }}"
+    state: restarted
+
+- name: restart firewall on Debian
+  service:
+    name: "{{ _boc_debian_firewall_service_name }}"
+    state: restarted

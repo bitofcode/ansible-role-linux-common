@@ -1,0 +1,17 @@
+---
+- name: "System Update for Debian-based OSs"
+  include_tasks: "setup-firewall-for-Debian.yml"
+  when: ansible_os_family == "Debian"
+
+- name: "System Packages for RedHat-based OSs"
+  include_tasks: "setup-firewall-for-RedHat.yml"
+  when: ansible_os_family == "RedHat"
+
+- name: Enable Firewall as a service
+  systemd:
+      name: "{{ _firewall_service_name }}"
+      state: started
+      daemon-reload: True
+      enabled: True
+      masked: False
+      

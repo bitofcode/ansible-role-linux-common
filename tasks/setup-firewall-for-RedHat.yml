@@ -1,0 +1,25 @@
+---
+- name: Install Firewall Packages
+  yum:
+    name: "{{ _firewall_packages }}"
+    state: latest
+
+- name: "Configure firewall defaults"
+  firewalld: 
+    permanent: yes
+    zone: "{{ item.name }}" 
+    state: "{{ item.state }}"
+  with_items:
+    - { name: 'drop', state: 'present' }
+  notify:
+    - restart firewall on RedHat
+
+- name: firewall rules
+  firewalld:
+    port: "{{ item.port }}/{{ item.proto }}"
+    permanent: yes
+    state: "{{ item.rule }}"
+  with_items: "{{ boc_firewall_firewalld_rules }}"
+  when: boc_firewall_firewalld_rules is defined and (boc_firewall_firewalld_rules | length > 0)
+  notify:
+    - restart firewall on RedHat

@@ -14,7 +14,7 @@
 - name: "Ensure sudo-groups {{ boc_sudo_groups }}"
   template:
     src: templates/sudoers.j2
-    dest: "/etc/sudoers.d/{{ boc_admin_group }}"
+    dest: "/etc/sudoers.d/boc_admin_groups"
     owner: root
     group: root
     mode: u=rw,g=r,o=r
