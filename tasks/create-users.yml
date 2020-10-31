@@ -1,0 +1,20 @@
+---
+- name: create groups
+  group:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ boc_sudo_groups }}"
+
+- name: create users
+  include_tasks: "create-user.yml"
+  loop: "{{  boc_users  | default([]) }}"
+  loop_control:
+    loop_var: boc_user
+
+- name: "Ensure sudo-groups {{ boc_sudo_groups }}"
+  template:
+    src: templates/sudoers.j2
+    dest: "/etc/sudoers.d/{{ boc_admin_group }}"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r

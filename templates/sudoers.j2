@@ -1,0 +1,7 @@
+{%if boc_sudo_groups is defined %}
+
+{% for group in boc_sudo_groups %}
+%{{ group }}   ALL=(ALL:ALL) NOPASSWD: ALL
+{% endfor %}
+
+{% endif %}

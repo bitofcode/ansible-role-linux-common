@@ -1,2 +1,24 @@
 ---
 # tasks file for bitofcode.linux_common
+- name: "Include vars"
+  include_vars:
+    file: "main.yml"
+
+- name: "Include vars"
+  include_vars:
+    file: "ansible_os_family.yml"
+
+- name: "Set a Hostname to {{ boc_hostname }}" 
+  hostname:
+    name: "{{ boc_hostname }}"
+  when: boc_hostname is defined and (boc_hostname | length > 0)
+
+- name: "System Packages"
+  include_tasks: "install-packages.yml"
+
+- name: "System Packages"
+  include_tasks: "create-users.yml"
+
+- name: "Setup SSH-Server"
+  include_tasks: "setup-ssh-server.yml"
+  when: boc_setup_ssh_server is defined and boc_setup_ssh_server

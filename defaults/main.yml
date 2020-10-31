@@ -1,2 +1,32 @@
 ---
 # defaults file for bitofcode.linux_common
+
+boc_hostname: "host-{{ ansible_os_family }}"
+boc_sudo_groups:
+  - autoadmins
+# Users
+boc_users:
+  - name: "autoadmin"
+    group: "autoadmins"
+    shell: "/usr/bin/bash"
+    groups: []
+    ssh_key_length: 4096
+    authorized_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDTl9jhW1gFdGFP9h9anwMF+vObysqyeRrpntaFJlnrOL0LwhF69js5G7RDXtKLKgYVAq4pDr85e+Q4LzlsfeCS+t5pjDQvu4tkRi02MMBUg23t+kPEwbgYdVQREUSvhYZQujkpX5FBN9Wh48xnJ7MuHn8mz2iT9xivnWq74S5Q4bmy7KzGysj2a/uj2FhHiLmDXDy0V8prtamb7uo5+3wzCdvobc9F+pMeJ0z3dUt42PSlbjwDeLs+6fiiDRr/KDen5uIu+s0oawQNi5qwUwscsmo0PxDaOvwfvBO3oklBzIH0X4Fr0o0KFGmLUHjvWaq/UIw4+bpOtAiCxpceRMh5XUteXbaLFMuMmpQ3UUaXE++d+lx4PeVuvWbVfcaVkCyYLlN1PFeXI1Z/f2II5SH/5kE+75FKhIxPkfMxNtPjlufARoCxhYOprBFyyZuUXUL7XPHYMPawJGPjfPl3pEIeM2oSzSqnjr3JaZY+12t/5TwTh3D0PAVnkSnjVgzgH+owqsbqLnr20pmPNiNBp3F+4lGnMybzIRThWYqzddHYvmf8zUJqkISOO03SIia4/g1T3N5xdLzstE5XgcR8u41BsxK3FcUh+ctcZTtk/NN8ar7vUA5+MJi/TABDQ/+xNIKwVv1UFTs03ZNUoqKAg2RGIj7nyjQJbTkJ7tsCxTdiqw== autoadmin@excutor"
+
+# Firewall ufw
+boc_firewall_ufw_rules:
+  - { rule: "limit", port: "22", proto: "tcp" }
+#  - { rule: "allow", port: "80", proto: "tcp" }
+#  - { rule: "allow", port: "443", proto: "tcp" }
+
+boc_system_update: True
+
+# Packages that have to be present
+boc_packages_present: []
+
+# Packages that have to be in latest version
+boc_packages_latest: []
+
+#
+boc_setup_ssh_server: True

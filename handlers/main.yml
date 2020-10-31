@@ -1,2 +1,11 @@
 ---
 # handlers file for bitofcode.linux_common
+- name: restart sshd on RedHat
+  service:
+    name: "{{ _boc_redhat_sshd_service_name }}"
+    state: restarted
+
+- name: restart sshd on Debian
+  service:
+    name: "{{ _boc_debian_sshd_service_name }}"
+    state: restarted
