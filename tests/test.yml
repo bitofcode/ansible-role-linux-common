@@ -1,5 +1,6 @@
 ---
-- hosts: localhost
-  remote_user: root
+- hosts: all
+  remote_user: vagrant
+  become: True
   roles:
-    - bitofcode.linux_common
+    - "ansible-role-linux-common"

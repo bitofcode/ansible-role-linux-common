@@ -1,0 +1,21 @@
+---
+- name: "create user {{ user.name }}"
+  user:
+    name: "{{ boc_user.name }}"
+    group: "{{ boc_user.group | default(omit) }}"
+    shell: "{{ boc_user.shell | default(omit) }}"
+    groups: "{{ boc_user.groups | default(omit) }}"
+    ssh_key_bits: "{{ boc_user.ssh_key_length | default(4096) }}"
+    generate_ssh_key: True
+    append: True
+    state: present
+
+- name: "set authorized keys for user {{ boc_user.name }}"
+  authorized_key:
+    user: "{{ boc_user.name }}"
+    state: present
+    key: "{{ authorized_key }}"
+    exclusive: False
+  loop: "{{ boc_user.authorized_keys | default([]) }}"
+  loop_control:
+    loop_var: authorized_key

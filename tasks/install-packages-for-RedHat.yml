@@ -1,0 +1,26 @@
+---
+# RedHat
+- name: "Update the entire system"
+  yum:
+    name: '*'
+    state: latest
+    update_cache: True
+  when: boc_system_update is defined and boc_system_update
+
+- name: "Ensure packages are present"
+  yum:
+    name: "{{ boc_packages_present }}"
+    state: present
+  when: boc_packages_present is defined and (boc_packages_present|length > 0)
+
+- name: "Ensure packages are latest"
+  yum:
+    name: "{{ boc_packages_latest }}"
+    state: latest
+  when: boc_packages_latest is defined and (boc_packages_latest|length > 0)
+
+- name: "Remove system packages"
+  yum:
+    name: "{{ boc_packages_removed }}"
+    state: absent
+  when: boc_packages_removed is defined and (boc_packages_removed|length > 0)

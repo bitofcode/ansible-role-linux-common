@@ -1,0 +1,7 @@
+---
+_sshd_service_name: "restart sshd on RedHat"
+
+_firewall_packages:
+  - "firewalld"
+
+_firewall_service_name: firewalld

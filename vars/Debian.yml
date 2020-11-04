@@ -1,0 +1,7 @@
+---
+_sshd_service_name: "restart sshd on Debian"
+
+_firewall_packages:
+  - "ufw"
+
+_firewall_service_name: ufw

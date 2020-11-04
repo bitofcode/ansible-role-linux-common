@@ -1,0 +1,50 @@
+---
+# Setup ssh server
+- name: "Install SSH-Sever"
+  package:
+    name: "{{ _boc_ssh_server_packages }}"
+    state: present
+
+- name: "Disable empty password login"
+  lineinfile: 
+    dest: "{{ _boc_sshd_config }}"
+    regexp: "^PermitEmptyPasswords "
+    line: "PermitEmptyPasswords no"
+  notify: "{{ _sshd_service_name }}"
+
+- name: "Disable remote root login"
+  lineinfile:
+    dest: "{{ _boc_sshd_config }}"
+    regexp: "^PermitRootLogin"
+    line: "PermitRootLogin no"
+  notify: "{{ _sshd_service_name }}"
+
+- name: "Disable password login"
+  lineinfile:
+    dest: "{{ _boc_sshd_config }}"
+    regexp: "^PasswordAuthentication "
+    line: "PasswordAuthentication no"
+  notify: "{{ _sshd_service_name }}"
+
+- name: "Enable PAM"
+  lineinfile:
+    dest: "{{ _boc_sshd_config }}"
+    regexp: "^UsePAM "
+    line: "UsePAM yes"
+  notify: "{{ _sshd_service_name }}"
+
+- name: enable service sshd and ensure it is not masked
+  systemd:
+    name: "{{ _boc_redhat_sshd_service_name }}"
+    enabled: yes
+    state: started
+    masked: no
+  when: ansible_os_family == "RedHat"
+
+- name: enable service sshd and ensure it is not masked
+  systemd:
+    name: "{{ _boc_debian_sshd_service_name }}"
+    enabled: yes
+    state: started
+    masked: no
+  when: ansible_os_family == "Debian"

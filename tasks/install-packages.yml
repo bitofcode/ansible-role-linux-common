@@ -1,0 +1,11 @@
+---
+- name: "System Update for Debian-based OSs"
+  include_tasks: "install-packages-for-Debian.yml"
+  when: ansible_os_family == "Debian"
+
+- name: "System Packages for RedHat-based OSs"
+  include_tasks: "install-packages-for-RedHat.yml"
+  when: ansible_os_family == "RedHat"
+
+- name: "Create Users"
+  include_tasks: "create-users.yml"

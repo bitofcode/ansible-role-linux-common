@@ -1,2 +1,11 @@
 ---
 # vars file for bitofcode.linux_common
+_boc_ssh_server_packages:
+  - "openssh-server"
+
+_boc_sshd_config: "/etc/ssh/sshd_config"
+_boc_sshd_service_name: "sshd.service"
+_boc_debian_sshd_service_name: "{{ _boc_sshd_service_name }}"
+_boc_redhat_sshd_service_name: "{{ _boc_sshd_service_name }}"
+_boc_redhat_firewall_service_name: firewalld
+_boc_debian_firewall_service_name: ufw

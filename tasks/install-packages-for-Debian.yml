@@ -1,0 +1,30 @@
+---
+- name: "Update the APT Cache"
+  apt:
+    update_cache: True
+  changed_when: False
+
+- name: "Update the entire system"
+  apt:
+    upgrade: dist
+    update_cache: False
+  when: boc_system_update is defined and boc_system_update
+
+- name: "Ensure packages are present"
+  apt:
+    name: "{{ boc_packages_present }}"
+    state: present
+  when: boc_packages_present is defined and (boc_packages_present|length > 0)
+
+- name: "Ensure packages are latest"
+  apt:
+    name: "{{ boc_packages_latest }}"
+    state: latest
+  when: boc_packages_latest is defined and (boc_packages_latest|length > 0)
+
+- name: "Remove system packages"
+  apt:
+    name: "{{ boc_packages_removed }}"
+    state: absent
+    update_cache: True
+  when: boc_packages_removed is defined and (boc_packages_removed|length > 0)
