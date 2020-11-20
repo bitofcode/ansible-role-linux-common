@@ -24,6 +24,15 @@
   notify:
     - restart firewall on Debian
 
+- name: "Configure ufw src"
+  ufw: 
+    rule: "{{ item.rule }}"
+    src: "{{ item.src }}"
+  with_items: "{{ boc_firewall_ufw_src }}"
+  when: boc_firewall_ufw_src is defined and (boc_firewall_ufw_src | length > 0)
+  notify:
+    - restart firewall on Debian
+
 - name: "Enable ufw logging"
   ufw: 
     logging: "{{ boc_firewall_ufw_logging }}"

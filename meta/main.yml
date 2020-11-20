@@ -31,6 +31,10 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - focal
+    - name: EL
+      versions:
+        - 7
+        - 8
 
   galaxy_tags:
     - "sshd"
